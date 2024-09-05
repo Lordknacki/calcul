@@ -1,44 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Football Match Odds Calculator</title>
+<title>Calculateur de Cotes pour Match de Football</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+    .container {
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        max-width: 500px;
+        margin: auto;
+    }
+    input, button {
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    label {
+        margin-top: 20px;
+    }
+</style>
 <script>
 function calculateOdds() {
     var lambda = parseFloat(document.getElementById('lambda').value);
     var mu = parseFloat(document.getElementById('mu').value);
 
-    // Calculate the Poisson probability for 4-2 score
-    function poissonProbability(lam, mu, goalsHome, goalsAway) {
-        function factorial(n) {
-            return n ? n * factorial(n - 1) : 1;
-        }
+    function factorial(n) {
+        return n ? n * factorial(n - 1) : 1;
+    }
 
+    function poissonProbability(lam, mu, goalsHome, goalsAway) {
         var probHome = Math.exp(-lam) * Math.pow(lam, goalsHome) / factorial(goalsHome);
         var probAway = Math.exp(-mu) * Math.pow(mu, goalsAway) / factorial(goalsAway);
         return probHome * probAway;
     }
 
     var prob42 = poissonProbability(lambda, mu, 4, 2);
-    var odds42 = prob42 > 0 ? (1 / prob42).toFixed(2) : 'Infinity';
+    var odds42 = prob42 > 0 ? (1 / prob42).toFixed(2) : 'Infini';
 
-    // Display the results
-    document.getElementById('result').innerHTML = 'Probability of 4-2: ' + prob42.toFixed(4) +
-        '<br>Odds for 4-2 score: ' + odds42;
+    document.getElementById('result').innerHTML = 'Probabilité du score 4-2 pour l\'équipe à domicile : ' + prob42.toFixed(4) +
+        '<br>Cotes pour un score de 4-2 : ' + odds42;
 }
 </script>
 </head>
 <body>
-<h2>Enter Average Goals for Teams</h2>
-<p>
-    <label for="lambda">Average Goals by Team A (Home):</label>
+<div class="container">
+    <h2>Calculateur de Cotes pour un Score de 4-2</h2>
+    <p>Ce formulaire vous permet de calculer la probabilité et les cotes d'un score de 4-2 pour l'équipe à domicile favorite.</p>
+    <label for="lambda">Moyenne des buts de l'équipe à domicile :</label>
     <input type="number" id="lambda" step="0.01" value="1.5">
-</p>
-<p>
-    <label for="mu">Average Goals by Team B (Away):</label>
+    <label for="mu">Moyenne des buts de l'équipe à l'extérieur :</label>
     <input type="number" id="mu" step="0.01" value="1.0">
-</p>
-<button onclick="calculateOdds()">Calculate Odds</button>
-<p id="result"></p>
+    <button onclick="calculateOdds()">Calculer les Cotes</button>
+    <p id="result"></p>
+</div>
 </body>
 </html>
