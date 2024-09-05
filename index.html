@@ -55,7 +55,7 @@ function calculateOdds() {
     var prob42 = poissonProbability(lambda, mu, 4, 2);
     var odds42 = prob42 > 0 ? (1 / prob42).toFixed(2) : 'Infini';
 
-    document.getElementById('result').innerHTML = 'Probabilité du score 4-2 pour l\'équipe à domicile : ' + prob42.toFixed(4) +
+    document.getElementById('result').innerHTML = 'Probabilité du score 4-2 pour l\'équipe à domicile : ' + (prob42 * 100).toFixed(2) + '%' +
         '<br>Cotes pour un score de 4-2 : ' + odds42;
 }
 </script>
@@ -63,7 +63,7 @@ function calculateOdds() {
 <body>
 <div class="container">
     <h2>Calculateur de Cotes pour un Score de 4-2</h2>
-    <p>Ce formulaire vous permet de calculer la probabilité et les cotes d'un score de 4-2 pour l'équipe à domicile favorite.</p>
+    <p>Ce formulaire vous permet de calculer la probabilité en pourcentage et les cotes d'un score de 4-2 pour l'équipe à domicile favorite.</p>
     <label for="lambda">Moyenne des buts de l'équipe à domicile :</label>
     <input type="number" id="lambda" step="0.01" value="1.5">
     <label for="mu">Moyenne des buts de l'équipe à l'extérieur :</label>
