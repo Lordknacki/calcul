@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return Math.exp(-lambda) * Math.pow(lambda, k) / factorial(k);
     }
 
-    function calculateOdds() {
+    window.calculateOdds = function() {
         var homeTeam = document.getElementById('homeTeam').value;
         var awayTeam = document.getElementById('awayTeam').value;
         var lambda = parseFloat(getGoalsPerMatch(teamGoals[homeTeam]));
