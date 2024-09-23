@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Boavista FC": 39,
         "Nacional": 66,
         "Farense": 46,
-        "Arouca": 54
+        "Arouca": 54,
+        "AVS": 50,
     };
 
     function getGoalsPerMatch(goals) {
