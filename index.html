@@ -32,24 +32,22 @@
             return (goals / 34).toFixed(2);
         }
 
-        function compareGoals() {
-            let team1 = document.getElementById("team1").value;
-            let team2 = document.getElementById("team2").value;
-            let average1 = getGoalsPerMatch(teamGoals[team1]);
-            let average2 = getGoalsPerMatch(teamGoals[team2]);
-            let combinedAverage = ((parseFloat(average1) + parseFloat(average2)) / 2).toFixed(2);
-
-            document.getElementById("result1").textContent = `Moyenne de buts par match de ${team1} : ${average1}`;
-            document.getElementById("result2").textContent = `Moyenne de buts par match de ${team2} : ${average2}`;
-            document.getElementById("combined").textContent = `Moyenne combinée de buts par match : ${combinedAverage}`;
-
-            calculateScoreSuccess(4, 2);
+        // Utilisation de la distribution de Poisson pour calculer la probabilité d'un score exact
+        function poissonProbability(lambda, k) {
+            return Math.pow(lambda, k) * Math.exp(-lambda) / factorial(k);
         }
 
-        function calculateScoreSuccess(goalsFor, goalsAgainst) {
-            const probability = 0.005; // 0.5%
+        function factorial(n) {
+            return n ? n * factorial(n - 1) : 1;
+        }
+
+        function calculateScoreSuccess(lambda1, lambda2, goalsFor, goalsAgainst) {
+            const probFor = poissonProbability(lambda1, goalsFor);
+            const probAgainst = poissonProbability(lambda2, goalsAgainst);
+            const probability = probFor * probAgainst;
             const odds = 1 / probability;
-            document.getElementById("scoreSuccess").textContent = `Pourcentage de réussite pour le score 4-2 : ${(probability * 100).toFixed(2)}%`;
+
+            document.getElementById("scoreSuccess").textContent = `Probabilité pour le score 4-2 : ${(probability * 100).toFixed(4)}%`;
             document.getElementById("odds").textContent = `Cote correspondante : ${odds.toFixed(2)}`;
         }
     </script>
