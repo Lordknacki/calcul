@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Comparaison des buts par match des équipes de la Liga Portugal</title>
+    <title>Statistiques des matchs de football</title>
     <script>
-        // Les données des équipes et leurs buts totaux sur 3 saisons
+        // Les données des équipes et leurs buts totaux sur la dernière saison
         const teamGoals = {
             "FC Porto": 74,
             "SL Benfica": 71,
@@ -28,12 +28,10 @@
             "Arouca": 31
         };
 
-        // Calcul des moyennes de buts par match sur 34 matchs par saison
         function getGoalsPerMatch(goals) {
-            return (goals / (34 * 3)).toFixed(2); // Diviser par le nombre total de matchs sur 3 saisons
+            return (goals / 34).toFixed(2);
         }
 
-        // Fonction pour calculer et afficher les moyennes
         function compareGoals() {
             let team1 = document.getElementById("team1").value;
             let team2 = document.getElementById("team2").value;
@@ -44,25 +42,66 @@
             document.getElementById("result1").textContent = `Moyenne de buts par match de ${team1} : ${average1}`;
             document.getElementById("result2").textContent = `Moyenne de buts par match de ${team2} : ${average2}`;
             document.getElementById("combined").textContent = `Moyenne combinée de buts par match : ${combinedAverage}`;
+
+            calculateScoreSuccess(4, 2);
+        }
+
+        function calculateScoreSuccess(goalsFor, goalsAgainst) {
+            const probability = 0.005; // 0.5%
+            const odds = 1 / probability;
+            document.getElementById("scoreSuccess").textContent = `Pourcentage de réussite pour le score 4-2 : ${(probability * 100).toFixed(2)}%`;
+            document.getElementById("odds").textContent = `Cote correspondante : ${odds.toFixed(2)}`;
         }
     </script>
 </head>
 <body>
-    <h1>Comparer les buts moyens par match des équipes</h1>
+    <h1>Comparer les buts moyens par match des équipes et chances d'un score 4-2</h1>
     <label for="team1">Choisissez la première équipe:</label>
     <select id="team1">
         <option value="FC Porto">FC Porto</option>
-        <!-- Répéter pour les autres équipes -->
         <option value="SL Benfica">SL Benfica</option>
-        <!-- Ajoutez toutes les équipes ici -->
+        <option value="SC Braga">SC Braga</option>
+        <option value="Sporting CP">Sporting CP</option>
+        <option value="Rio Ave FC">Rio Ave FC</option>
+        <option value="FC Famalicão">FC Famalicão</option>
+        <option value="Vitória SC">Vitória SC</option>
+        <option value="Moreirense FC">Moreirense FC</option>
+        <option value="Santa Clara">Santa Clara</option>
+        <option value="Gil Vicente FC">Gil Vicente FC</option>
+        <option value="Marítimo M">Marítimo M</option>
+        <option value="Estoril Praia">Estoril Praia</option>
+        <option value="Portimonense">Portimonense</option>
+        <option value="Boavista FC">Boavista FC</option>
+        <option value="Tondela">Tondela</option>
+        <option value="Nacional">Nacional</option>
+        <option value="Farense">Farense</option>
+        <option value="Paços de Ferreira">Paços de Ferreira</option>
+        <option value="Belenenses">Belenenses</option>
+        <option value="Arouca">Arouca</option>
     </select>
 
     <label for="team2">Choisissez la deuxième équipe:</label>
     <select id="team2">
         <option value="FC Porto">FC Porto</option>
-        <!-- Répéter pour les autres équipes -->
         <option value="SL Benfica">SL Benfica</option>
-        <!-- Ajoutez toutes les équipes ici -->
+        <option value="SC Braga">SC Braga</option>
+        <option value="Sporting CP">Sporting CP</option>
+        <option value="Rio Ave FC">Rio Ave FC</option>
+        <option value="FC Famalicão">FC Famalicão</option>
+        <option value="Vitória SC">Vitória SC</option>
+        <option value="Moreirense FC">Moreirense FC</option>
+        <option value="Santa Clara">Santa Clara</option>
+        <option value="Gil Vicente FC">Gil Vicente FC</option>
+        <option value="Marítimo M">Marítimo M</option>
+        <option value="Estoril Praia">Estoril Praia</option>
+        <option value="Portimonense">Portimonense</option>
+        <option value="Boavista FC">Boavista FC</option>
+        <option value="Tondela">Tondela</option>
+        <option value="Nacional">Nacional</option>
+        <option value="Farense">Farense</option>
+        <option value="Paços de Ferreira">Paços de Ferreira</option>
+        <option value="Belenenses">Belenenses</option>
+        <option value="Arouca">Arouca</option>
     </select>
 
     <button onclick="compareGoals()">Comparer les buts</button>
@@ -70,5 +109,7 @@
     <p id="result1"></p>
     <p id="result2"></p>
     <p id="combined"></p>
+    <p id="scoreSuccess"></p>
+    <p id="odds"></p>
 </body>
 </html>
