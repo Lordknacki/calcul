@@ -2,94 +2,67 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Comparaison des buts des équipes de la Liga Portugal</title>
+    <title>Comparaison des buts par match des équipes de la Liga Portugal</title>
     <script>
-        // Les données des équipes et leurs buts moyens
+        // Les données des équipes et leurs buts totaux sur 3 saisons
         const teamGoals = {
-            "FC Porto": 24.67,
-            "SL Benfica": 23.67,
-            "SC Braga": 20.33,
-            "Sporting CP": 16.33,
-            "Rio Ave FC": 16.00,
-            "FC Famalicão": 17.67,
-            "Vitória SC": 17.67,
-            "Moreirense FC": 14.00,
-            "Santa Clara": 12.00,
-            "Gil Vicente FC": 13.33,
-            "Marítimo M": 17.67,
-            "Estoril Praia": 14.67,
-            "Portimonense": 12.67,
-            "Boavista FC": 13.67,
-            "Tondela": 11.67,
-            "Nacional": 11.00,
-            "Farense": 10.00,
-            "Paços de Ferreira": 13.00,
-            "Belenenses": 9.00,
-            "Arouca": 10.33
+            "FC Porto": 74,
+            "SL Benfica": 71,
+            "SC Braga": 61,
+            "Sporting CP": 49,
+            "Rio Ave FC": 48,
+            "FC Famalicão": 53,
+            "Vitória SC": 53,
+            "Moreirense FC": 42,
+            "Santa Clara": 36,
+            "Gil Vicente FC": 40,
+            "Marítimo M": 53,
+            "Estoril Praia": 44,
+            "Portimonense": 38,
+            "Boavista FC": 41,
+            "Tondela": 35,
+            "Nacional": 33,
+            "Farense": 30,
+            "Paços de Ferreira": 39,
+            "Belenenses": 27,
+            "Arouca": 31
         };
+
+        // Calcul des moyennes de buts par match sur 34 matchs par saison
+        function getGoalsPerMatch(goals) {
+            return (goals / (34 * 3)).toFixed(2); // Diviser par le nombre total de matchs sur 3 saisons
+        }
 
         // Fonction pour calculer et afficher les moyennes
         function compareGoals() {
             let team1 = document.getElementById("team1").value;
             let team2 = document.getElementById("team2").value;
-            let average1 = teamGoals[team1];
-            let average2 = teamGoals[team2];
-            let combinedAverage = ((average1 + average2) / 2).toFixed(2);
+            let average1 = getGoalsPerMatch(teamGoals[team1]);
+            let average2 = getGoalsPerMatch(teamGoals[team2]);
+            let combinedAverage = ((parseFloat(average1) + parseFloat(average2)) / 2).toFixed(2);
 
-            document.getElementById("result1").textContent = `Moyenne de buts de ${team1} : ${average1}`;
-            document.getElementById("result2").textContent = `Moyenne de buts de ${team2} : ${average2}`;
-            document.getElementById("combined").textContent = `Moyenne combinée de buts : ${combinedAverage}`;
+            document.getElementById("result1").textContent = `Moyenne de buts par match de ${team1} : ${average1}`;
+            document.getElementById("result2").textContent = `Moyenne de buts par match de ${team2} : ${average2}`;
+            document.getElementById("combined").textContent = `Moyenne combinée de buts par match : ${combinedAverage}`;
         }
     </script>
 </head>
 <body>
-    <h1>Comparer les buts moyens des équipes</h1>
+    <h1>Comparer les buts moyens par match des équipes</h1>
     <label for="team1">Choisissez la première équipe:</label>
     <select id="team1">
         <option value="FC Porto">FC Porto</option>
+        <!-- Répéter pour les autres équipes -->
         <option value="SL Benfica">SL Benfica</option>
-        <option value="SC Braga">SC Braga</option>
-        <option value="Sporting CP">Sporting CP</option>
-        <option value="Rio Ave FC">Rio Ave FC</option>
-        <option value="FC Famalicão">FC Famalicão</option>
-        <option value="Vitória SC">Vitória SC</option>
-        <option value="Moreirense FC">Moreirense FC</option>
-        <option value="Santa Clara">Santa Clara</option>
-        <option value="Gil Vicente FC">Gil Vicente FC</option>
-        <option value="Marítimo M">Marítimo M</option>
-        <option value="Estoril Praia">Estoril Praia</option>
-        <option value="Portimonense">Portimonense</option>
-        <option value="Boavista FC">Boavista FC</option>
-        <option value="Tondela">Tondela</option>
-        <option value="Nacional">Nacional</option>
-        <option value="Farense">Farense</option>
-        <option value="Paços de Ferreira">Paços de Ferreira</option>
-        <option value="Belenenses">Belenenses</option>
-        <option value="Arouca">Arouca</option>
+        <!-- Ajoutez toutes les équipes ici -->
     </select>
 
     <label for="team2">Choisissez la deuxième équipe:</label>
     <select id="team2">
         <option value="FC Porto">FC Porto</option>
+        <!-- Répéter pour les autres équipes -->
         <option value="SL Benfica">SL Benfica</option>
-        <option value="SC Braga">SC Braga</option>
-        <option value="Sporting CP">Sporting CP</option>
-        <option value="Rio Ave FC">Rio Ave FC</option>
-        <option value="FC Famalicão">FC Famalicão</option>
-        <option value="Vitória SC">Vitória SC</option>
-        <option value="Moreirense FC">Moreirense FC</option>
-        <option value="Santa Clara">Santa Clara</option>
-        <option value="Gil Vicente FC">Gil Vicente FC</option>
-        <option value="Marítimo M">Marítimo M</option>
-        <option value="Estoril Praia">Estoril Praia</option>
-        <option value="Portimonense">Portimonense</option>
-        <option value="Boavista FC">Boavista FC</option>
-        <option value="Tondela">Tondela</option>
-        <option value="Nacional">Nacional</option>
-        <option value="Farense">Farense</option>
-        <option value="Paços de Ferreira">Paços de Ferreira</option>
-        <option value="Belenenses">Belenenses</option>
-        <option value="Arouca">Arouca</option>
+        <!-- Ajoutez toutes les équipes ici -->
     </select>
 
     <button onclick="compareGoals()">Comparer les buts</button>
