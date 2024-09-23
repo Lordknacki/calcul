@@ -93,6 +93,27 @@ document.addEventListener('DOMContentLoaded', function() {
         "Bochum": 42,
         "Cologne": 28,
         "Darmstadt": 30,
+        "Atalanta": 63,
+        "Bologna": 44,
+        "Cagliari": 36,
+        "Empoli": 48,
+        "Fiorentina": 59,
+        "Frosinone": 33,
+        "Genoa": 31,
+        "Inter Milan": 81,
+        "Juventus": 70,
+        "Lazio": 68,
+        "Lecce": 30,
+        "AC Milan": 77,
+        "Monza": 42,
+        "Napoli": 89,
+        "AS Roma": 64,
+        "Salernitana": 35,
+        "Sassuolo": 52,
+        "Torino": 45,
+        "Udinese": 39,
+        "Verona": 38,
+
     };    
     function getGoalsPerMatch(goals) {
         return (goals / 34).toFixed(2);
