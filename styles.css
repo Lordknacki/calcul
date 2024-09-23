@@ -1,85 +1,58 @@
-/* Basic Reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* Basic setup */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+    padding: 20px;
 }
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 10px;
+.container {
+    max-width: 960px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 h1 {
-    color: #0275d8;
-    margin-bottom: 20px;
+    color: #0056b3;
     font-size: 24px;
+    margin-bottom: 20px;
 }
 
-/* Styling the container for better spacing and aesthetics */
-.container {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 360px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Enhancing form inputs and buttons */
 select, button {
     width: 100%;
     padding: 10px;
+    margin-top: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #fff;
     font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-select:focus, button:focus {
-    border-color: #0275d8;
-    outline: none;
 }
 
 button {
-    background-color: #0275d8;
+    background-color: #28a745;
     color: white;
-    border: none;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #025aa5;
+    background-color: #218838;
 }
 
-/* Responsive Result Display */
 #result {
+    margin-top: 20px;
     padding: 15px;
-    background: #e9ecef;
-    border-left: 5px solid #0275d8;
-    font-size: 16px;
-    line-height: 1.5;
+    background-color: #d4edda;
+    border-left: 5px solid #28a745;
+    color: #155724;
 }
 
-/* Responsive Design Adjustments */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .container {
-        width: 95%;
-        max-width: none;
-    }
-
-    h1 {
-        font-size: 20px;
+        width: 100%;
+        padding: 10px;
     }
 }
