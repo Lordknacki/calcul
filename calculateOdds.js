@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "Torino": 45,
         "Udinese": 39,
         "Verona": 38,
-
+        "Como": 58,
     };    
     function getGoalsPerMatch(goals) {
         return (goals / 34).toFixed(2);
