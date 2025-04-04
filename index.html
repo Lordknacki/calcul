@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Simulateur d'épargne composée</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,6 +33,10 @@
       font-weight: bold;
       font-size: 1.2rem;
     }
+    canvas {
+      margin-top: 30px;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -54,7 +59,11 @@
   <button onclick="calculerEpargne()">Calculer</button>
   <div id="resultat"></div>
 
+  <canvas id="courbeEpargne"></canvas>
+
   <script>
+    let chart;
+
     function calculerEpargne() {
       const P = parseFloat(document.getElementById("capital").value);
       const PMT = parseFloat(document.getElementById("versement").value);
@@ -66,13 +75,58 @@
       const monthlyRate = r / n;
 
       let total = P;
+      let dataPoints = [];
+      let labels = [];
+      let cumulVersements = 0;
+
       for (let k = 0; k < months; k++) {
         const pmt_k = PMT * Math.pow(1 + g, k);
+        cumulVersements += pmt_k;
         total += pmt_k;
         total *= (1 + monthlyRate);
+
+        labels.push("Mois " + (k + 1));
+        dataPoints.push({
+          x: k + 1,
+          y: total
+        });
       }
 
       document.getElementById("resultat").innerText = `Valeur finale estimée : ${total.toFixed(2)} €`;
+
+      // Dessiner la courbe avec Chart.js
+      const ctx = document.getElementById("courbeEpargne").getContext("2d");
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Valeur de l'épargne (€)",
+            data: dataPoints.map(p => p.y),
+            borderColor: "#4F81BD",
+            fill: false,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Mois"
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: "Valeur accumulée (€)"
+              }
+            }
+          }
+        }
+      });
     }
   </script>
 </body>
