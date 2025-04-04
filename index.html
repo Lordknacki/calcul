@@ -28,6 +28,7 @@
       color: white;
       border: none;
       cursor: pointer;
+      margin-right: 10px;
     }
     #resultat {
       margin-top: 20px;
@@ -35,25 +36,19 @@
       font-size: 1.2rem;
       white-space: pre-line;
     }
-    canvas {
-      margin-top: 30px;
+    #graph-container {
+      position: relative;
       max-width: 100%;
-    }
-    table {
       margin-top: 30px;
-      border-collapse: collapse;
-      width: 100%;
     }
-    table, th, td {
-      border: 1px solid #ccc;
+    #resetZoomBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #FF7F50;
     }
-    th, td {
-      padding: 8px;
-      text-align: right;
-    }
-    th {
-      background-color: #4F81BD;
-      color: white;
+    canvas {
+      max-width: 100%;
     }
   </style>
 </head>
@@ -75,14 +70,17 @@
   <input type="number" id="duree" value="30">
 
   <button onclick="calculerEpargne()">Calculer</button>
-  <button onclick="chart.resetZoom()">Réinitialiser le zoom</button>
+  <button onclick="exporterExcel()">Exporter en Excel</button>
 
   <div id="resultat"></div>
-  <canvas id="courbeEpargne"></canvas>
-  <table id="tableVersements"></table>
+  <div id="graph-container">
+    <canvas id="courbeEpargne"></canvas>
+    <button id="resetZoomBtn" onclick="chart.resetZoom()">Réinitialiser le zoom</button>
+  </div>
 
   <script>
     let chart;
+    let donneesCSV = "Mois,Montant versé (€)\n";
 
     function calculerEpargne() {
       const P = parseFloat(document.getElementById("capital").value);
@@ -101,6 +99,8 @@
       let cumulInvesti = [];
       let versementsMensuels = [];
 
+      donneesCSV = "Mois,Montant versé (€)\n";
+
       for (let k = 0; k < months; k++) {
         const pmt_k = PMT * Math.pow(1 + g, k);
         versementsMensuels.push(pmt_k);
@@ -111,6 +111,8 @@
         labels.push("Mois " + (k + 1));
         dataPoints.push(total);
         cumulInvesti.push(cumulVersements);
+
+        donneesCSV += `${k + 1},${pmt_k.toFixed(2)}\n`;
       }
 
       const difference = total - cumulVersements;
@@ -175,19 +177,30 @@
                 pinch: {
                   enabled: true
                 },
-                mode: 'xy'
+                mode: 'xy',
+                limits: {
+                  x: { min: 0, max: months },
+                  y: { min: 0 }
+                },
+                scaleMode: 'percent',
+                rangeMin: { x: 0.5, y: 0.5 },
+                rangeMax: { x: 3, y: 3 }
               }
             }
           }
         }
       });
+    }
 
-      // Génération du tableau des versements mensuels
-      let tableHTML = '<tr><th>Mois</th><th>Montant versé (€)</th></tr>';
-      versementsMensuels.forEach((montant, index) => {
-        tableHTML += `<tr><td>${index + 1}</td><td>${montant.toFixed(2)}</td></tr>`;
-      });
-      document.getElementById("tableVersements").innerHTML = tableHTML;
+    function exporterExcel() {
+      const blob = new Blob([donneesCSV], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "versements_epargne.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   </script>
 </body>
