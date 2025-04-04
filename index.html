@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Simulateur d'épargne composée</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -38,6 +39,22 @@
       margin-top: 30px;
       max-width: 100%;
     }
+    table {
+      margin-top: 30px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: right;
+    }
+    th {
+      background-color: #4F81BD;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -58,9 +75,11 @@
   <input type="number" id="duree" value="30">
 
   <button onclick="calculerEpargne()">Calculer</button>
-  <div id="resultat"></div>
+  <button onclick="chart.resetZoom()">Réinitialiser le zoom</button>
 
+  <div id="resultat"></div>
   <canvas id="courbeEpargne"></canvas>
+  <table id="tableVersements"></table>
 
   <script>
     let chart;
@@ -100,12 +119,7 @@
       let message = `Valeur finale estimée : ${total.toFixed(2)} €\n` +
                     `Montant total investi : ${cumulVersements.toFixed(2)} €\n` +
                     `Intérêts gagnés : ${difference.toFixed(2)} €\n` +
-                    `Pourcentage de gain : ${pourcentageGain.toFixed(2)} %\n\n` +
-                    `Montants à investir par mois (exemples) :\n` +
-                    `- 1er mois : ${versementsMensuels[0].toFixed(2)} €\n` +
-                    `- Mois 12 : ${versementsMensuels[11].toFixed(2)} €\n` +
-                    `- Mois 120 : ${versementsMensuels[119].toFixed(2)} €\n` +
-                    `- Mois 360 : ${versementsMensuels[359].toFixed(2)} €`;
+                    `Pourcentage de gain : ${pourcentageGain.toFixed(2)} %`;
 
       document.getElementById("resultat").innerText = message;
 
@@ -147,9 +161,33 @@
                 text: "Montant (€)"
               }
             }
+          },
+          plugins: {
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'xy'
+              },
+              zoom: {
+                wheel: {
+                  enabled: true
+                },
+                pinch: {
+                  enabled: true
+                },
+                mode: 'xy'
+              }
+            }
           }
         }
       });
+
+      // Génération du tableau des versements mensuels
+      let tableHTML = '<tr><th>Mois</th><th>Montant versé (€)</th></tr>';
+      versementsMensuels.forEach((montant, index) => {
+        tableHTML += `<tr><td>${index + 1}</td><td>${montant.toFixed(2)}</td></tr>`;
+      });
+      document.getElementById("tableVersements").innerHTML = tableHTML;
     }
   </script>
 </body>
