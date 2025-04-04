@@ -155,13 +155,15 @@
               title: {
                 display: true,
                 text: "Mois"
-              }
+              },
+              min: 0
             },
             y: {
               title: {
                 display: true,
                 text: "Montant (€)"
-              }
+              },
+              min: 0
             }
           },
           plugins: {
@@ -179,12 +181,13 @@
                 },
                 mode: 'xy',
                 limits: {
-                  x: { min: 0, max: months },
-                  y: { min: 0 }
-                },
-                scaleMode: 'percent',
-                rangeMin: { x: 0.5, y: 0.5 },
-                rangeMax: { x: 3, y: 3 }
+                  x: { min: 0 },
+                  y: { min: 0 },
+                  zoom: {
+                    min: 1, // Pas de dézoom
+                    max: 3  // Zoom jusqu'à 300%
+                  }
+                }
               }
             }
           }
