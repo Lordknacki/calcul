@@ -71,6 +71,7 @@
 
   <button onclick="calculerEpargne()">Calculer</button>
   <button onclick="exporterExcel()">Exporter en Excel</button>
+  <button onclick="telechargerImage()">Télécharger le graphique</button>
 
   <div id="resultat"></div>
   <div id="graph-container">
@@ -150,6 +151,7 @@
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
             x: {
               title: {
@@ -163,7 +165,8 @@
                 display: true,
                 text: "Montant (€)"
               },
-              min: 0
+              min: 0,
+              suggestedMin: 0
             }
           },
           plugins: {
@@ -184,8 +187,8 @@
                   x: { min: 0 },
                   y: { min: 0 },
                   zoom: {
-                    min: 1, // Pas de dézoom
-                    max: 3  // Zoom jusqu'à 300%
+                    min: 1, // pas de dézoom possible
+                    max: 3  // zoom x3 max
                   }
                 }
               }
@@ -204,6 +207,15 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+
+    function telechargerImage() {
+      const canvas = document.getElementById("courbeEpargne");
+      const url = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "graphique_epargne.png";
+      link.click();
     }
   </script>
 </body>
