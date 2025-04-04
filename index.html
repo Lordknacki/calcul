@@ -32,6 +32,7 @@
       margin-top: 20px;
       font-weight: bold;
       font-size: 1.2rem;
+      white-space: pre-line;
     }
     canvas {
       margin-top: 30px;
@@ -79,9 +80,11 @@
       let labels = [];
       let cumulVersements = 0;
       let cumulInvesti = [];
+      let versementsMensuels = [];
 
       for (let k = 0; k < months; k++) {
         const pmt_k = PMT * Math.pow(1 + g, k);
+        versementsMensuels.push(pmt_k);
         cumulVersements += pmt_k;
         total += pmt_k;
         total *= (1 + monthlyRate);
@@ -92,9 +95,20 @@
       }
 
       const difference = total - cumulVersements;
-      document.getElementById("resultat").innerText = `Valeur finale estimée : ${total.toFixed(2)} €\nDont intérêts gagnés : ${difference.toFixed(2)} €`;
+      const pourcentageGain = (difference / cumulVersements) * 100;
 
-      // Dessiner la courbe avec Chart.js
+      let message = `Valeur finale estimée : ${total.toFixed(2)} €\n` +
+                    `Montant total investi : ${cumulVersements.toFixed(2)} €\n` +
+                    `Intérêts gagnés : ${difference.toFixed(2)} €\n` +
+                    `Pourcentage de gain : ${pourcentageGain.toFixed(2)} %\n\n` +
+                    `Montants à investir par mois (exemples) :\n` +
+                    `- 1er mois : ${versementsMensuels[0].toFixed(2)} €\n` +
+                    `- Mois 12 : ${versementsMensuels[11].toFixed(2)} €\n` +
+                    `- Mois 120 : ${versementsMensuels[119].toFixed(2)} €\n` +
+                    `- Mois 360 : ${versementsMensuels[359].toFixed(2)} €`;
+
+      document.getElementById("resultat").innerText = message;
+
       const ctx = document.getElementById("courbeEpargne").getContext("2d");
       if (chart) chart.destroy();
       chart = new Chart(ctx, {
