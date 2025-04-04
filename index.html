@@ -78,6 +78,7 @@
       let dataPoints = [];
       let labels = [];
       let cumulVersements = 0;
+      let cumulInvesti = [];
 
       for (let k = 0; k < months; k++) {
         const pmt_k = PMT * Math.pow(1 + g, k);
@@ -86,13 +87,12 @@
         total *= (1 + monthlyRate);
 
         labels.push("Mois " + (k + 1));
-        dataPoints.push({
-          x: k + 1,
-          y: total
-        });
+        dataPoints.push(total);
+        cumulInvesti.push(cumulVersements);
       }
 
-      document.getElementById("resultat").innerText = `Valeur finale estimée : ${total.toFixed(2)} €`;
+      const difference = total - cumulVersements;
+      document.getElementById("resultat").innerText = `Valeur finale estimée : ${total.toFixed(2)} €\nDont intérêts gagnés : ${difference.toFixed(2)} €`;
 
       // Dessiner la courbe avec Chart.js
       const ctx = document.getElementById("courbeEpargne").getContext("2d");
@@ -101,13 +101,22 @@
         type: "line",
         data: {
           labels: labels,
-          datasets: [{
-            label: "Valeur de l'épargne (€)",
-            data: dataPoints.map(p => p.y),
-            borderColor: "#4F81BD",
-            fill: false,
-            tension: 0.1
-          }]
+          datasets: [
+            {
+              label: "Valeur de l'épargne (€)",
+              data: dataPoints,
+              borderColor: "#4F81BD",
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: "Montant investi (€)",
+              data: cumulInvesti,
+              borderColor: "orange",
+              fill: false,
+              tension: 0.1
+            }
+          ]
         },
         options: {
           responsive: true,
@@ -121,7 +130,7 @@
             y: {
               title: {
                 display: true,
-                text: "Valeur accumulée (€)"
+                text: "Montant (€)"
               }
             }
           }
