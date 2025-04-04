@@ -40,12 +40,22 @@
       position: relative;
       max-width: 100%;
       margin-top: 30px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    #resetZoomBtn {
+    #resetZoomBtn, #zoomPlusBtn {
       position: absolute;
       top: 10px;
-      right: 10px;
       background-color: #FF7F50;
+      font-size: 0.9rem;
+    }
+    #resetZoomBtn {
+      right: 10px;
+    }
+    #zoomPlusBtn {
+      right: 150px;
     }
     canvas {
       max-width: 100%;
@@ -77,6 +87,7 @@
   <div id="graph-container">
     <canvas id="courbeEpargne"></canvas>
     <button id="resetZoomBtn" onclick="chart.resetZoom()">Réinitialiser le zoom</button>
+    <button id="zoomPlusBtn" onclick="zoomPlus()">+25%</button>
   </div>
 
   <script>
@@ -214,6 +225,12 @@
       link.href = url;
       link.download = "graphique_epargne.png";
       link.click();
+    }
+
+    function zoomPlus() {
+      if (chart) {
+        chart.zoom(1.25);
+      }
     }
   </script>
 </body>
