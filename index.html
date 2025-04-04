@@ -5,6 +5,7 @@
   <title>Simulateur d'épargne composée</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -92,7 +93,7 @@
 
   <script>
     let chart;
-    let donneesCSV = "Mois,Montant versé (€)\n";
+    let donneesTable = [];
 
     function calculerEpargne() {
       const P = parseFloat(document.getElementById("capital").value);
@@ -110,8 +111,7 @@
       let cumulVersements = 0;
       let cumulInvesti = [];
       let versementsMensuels = [];
-
-      donneesCSV = "Mois,Montant versé (€)\n";
+      donneesTable = [["Mois", "Montant à investir (€)", "Montant investi cumulé (€)", "Valeur cumulée avec intérêts (€)"]];
 
       for (let k = 0; k < months; k++) {
         const pmt_k = PMT * Math.pow(1 + g, k);
@@ -124,7 +124,7 @@
         dataPoints.push(total);
         cumulInvesti.push(cumulVersements);
 
-        donneesCSV += `${k + 1},${pmt_k.toFixed(2)}\n`;
+        donneesTable.push([k + 1, pmt_k.toFixed(2), cumulVersements.toFixed(2), total.toFixed(2)]);
       }
 
       const difference = total - cumulVersements;
@@ -211,14 +211,10 @@
     }
 
     function exporterExcel() {
-      const blob = new Blob([donneesCSV], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", "versements_epargne.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const ws = XLSX.utils.aoa_to_sheet(donneesTable);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Epargne");
+      XLSX.writeFile(wb, "versements_epargne.xlsx");
     }
 
     function telechargerImage() {
