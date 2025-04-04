@@ -168,19 +168,25 @@
                 display: true,
                 text: "Mois"
               },
-              min: 0
+              min: 0,
+              grace: 0
             },
             y: {
               title: {
                 display: true,
                 text: "Montant (€)"
               },
-              min: 0
+              min: 0,
+              grace: 0
             }
           },
           plugins: {
             zoom: {
-              pan: false,
+              pan: {
+                enabled: true,
+                mode: 'xy',
+                modifierKey: 'ctrl'
+              },
               zoom: {
                 wheel: { enabled: false },
                 pinch: { enabled: false },
