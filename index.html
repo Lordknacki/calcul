@@ -16,7 +16,7 @@
       margin: 10px 0;
       display: block;
     }
-    input[type="number"] {
+    input[type="number"], select {
       padding: 5px;
       width: 200px;
     }
@@ -45,22 +45,20 @@
       padding: 20px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    #resetZoomBtn, #zoomPlusBtn, #zoomMinusBtn {
+    #resetZoomBtn {
       position: absolute;
       top: 10px;
-      font-size: 0.9rem;
-    }
-    #resetZoomBtn {
       right: 10px;
+      font-size: 0.8rem;
+      padding: 4px 8px;
       background-color: #FF7F50;
     }
-    #zoomPlusBtn {
-      right: 150px;
-      background-color: #4CAF50;
-    }
-    #zoomMinusBtn {
-      right: 250px;
-      background-color: #d9534f;
+    #zoomSelector {
+      position: absolute;
+      top: 10px;
+      right: 130px;
+      font-size: 0.8rem;
+      padding: 4px 8px;
     }
     canvas {
       max-width: 100%;
@@ -91,8 +89,13 @@
   <div id="resultat"></div>
   <div id="graph-container">
     <canvas id="courbeEpargne"></canvas>
-    <button id="zoomMinusBtn" onclick="zoomMoins()">-25%</button>
-    <button id="zoomPlusBtn" onclick="zoomPlus()">+25%</button>
+    <select id="zoomSelector" onchange="changerZoom(this.value)">
+      <option value="1">Zoom 0%</option>
+      <option value="1.25">Zoom 25%</option>
+      <option value="1.5">Zoom 50%</option>
+      <option value="1.75">Zoom 75%</option>
+      <option value="2">Zoom 100%</option>
+    </select>
     <button id="resetZoomBtn" onclick="chart.resetZoom()">Réinitialiser le zoom</button>
   </div>
 
@@ -203,6 +206,13 @@
       });
     }
 
+    function changerZoom(valeur) {
+      if (chart) {
+        chart.resetZoom();
+        chart.zoom(parseFloat(valeur));
+      }
+    }
+
     function exporterExcel() {
       const blob = new Blob([donneesCSV], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
@@ -221,18 +231,6 @@
       link.href = url;
       link.download = "graphique_epargne.png";
       link.click();
-    }
-
-    function zoomPlus() {
-      if (chart) {
-        chart.zoom(1.25);
-      }
-    }
-
-    function zoomMoins() {
-      if (chart) {
-        chart.zoom(0.8);
-      }
     }
   </script>
 </body>
