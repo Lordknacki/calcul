@@ -151,7 +151,6 @@
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
           scales: {
             x: {
               title: {
@@ -165,8 +164,7 @@
                 display: true,
                 text: "Montant (€)"
               },
-              min: 0,
-              suggestedMin: 0
+              min: 0
             }
           },
           plugins: {
@@ -186,9 +184,9 @@
                 limits: {
                   x: { min: 0 },
                   y: { min: 0 },
-                  zoom: {
-                    min: 1, // pas de dézoom possible
-                    max: 3  // zoom x3 max
+                  minRange: {
+                    x: 1,
+                    y: 1
                   }
                 }
               }
