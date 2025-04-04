@@ -45,17 +45,22 @@
       padding: 20px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    #resetZoomBtn, #zoomPlusBtn {
+    #resetZoomBtn, #zoomPlusBtn, #zoomMinusBtn {
       position: absolute;
       top: 10px;
-      background-color: #FF7F50;
       font-size: 0.9rem;
     }
     #resetZoomBtn {
       right: 10px;
+      background-color: #FF7F50;
     }
     #zoomPlusBtn {
       right: 150px;
+      background-color: #4CAF50;
+    }
+    #zoomMinusBtn {
+      right: 250px;
+      background-color: #d9534f;
     }
     canvas {
       max-width: 100%;
@@ -86,8 +91,9 @@
   <div id="resultat"></div>
   <div id="graph-container">
     <canvas id="courbeEpargne"></canvas>
-    <button id="resetZoomBtn" onclick="chart.resetZoom()">Réinitialiser le zoom</button>
+    <button id="zoomMinusBtn" onclick="zoomMoins()">-25%</button>
     <button id="zoomPlusBtn" onclick="zoomPlus()">+25%</button>
+    <button id="resetZoomBtn" onclick="chart.resetZoom()">Réinitialiser le zoom</button>
   </div>
 
   <script>
@@ -180,25 +186,15 @@
           },
           plugins: {
             zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy'
-              },
+              pan: false,
               zoom: {
-                wheel: {
-                  enabled: true
-                },
-                pinch: {
-                  enabled: true
-                },
+                wheel: { enabled: false },
+                pinch: { enabled: false },
                 mode: 'xy',
                 limits: {
                   x: { min: 0 },
                   y: { min: 0 },
-                  minRange: {
-                    x: 1,
-                    y: 1
-                  }
+                  minRange: { x: 1, y: 1 }
                 }
               }
             }
@@ -230,6 +226,12 @@
     function zoomPlus() {
       if (chart) {
         chart.zoom(1.25);
+      }
+    }
+
+    function zoomMoins() {
+      if (chart) {
+        chart.zoom(0.8);
       }
     }
   </script>
